@@ -121,7 +121,7 @@ def enviar_mensajes_whatsapp(texto, number):
             "text": {
                 "preview_url": False,
                 "body": "👋 ¡Hola, bienvenido a RIOSOFT369! 🎟️\nPara comenzar con tu compra de boletos, digita tu número de cédula:",
-            },
+            }
         }
     else:
         data = {
@@ -132,11 +132,11 @@ def enviar_mensajes_whatsapp(texto, number):
             "text": {
                 "preview_url": False,
                 "body": "Gracias, has ingresado tu número de cédula",
-            },
+            }
         }
 
     # Convertir el diccionario a formato Json
-    data - json.dumps(data)
+    data = json.dumps(data)
 
     headers = {
         "Content-Type": "application/json",
