@@ -16,7 +16,7 @@ db = SQLAlchemy(app)
 # Modelo de la tabla log
 class Log(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    fecha_hora = db.Column(db.DateTime, default=datetime.now())
+    fecha_y_hora = db.Column(db.DateTime, default=datetime.now(datetime.timezone.utc))
     texto = db.Column(db.TEXT)
 
 
@@ -27,7 +27,7 @@ with app.app_context():
 
 # Función para ordenar los registros por fecha y hora
 def ordenar_por_fecha_y_hora(registros):
-    return sorted(registros, key=lambda x: x.fecha_hora, reverse=True)
+    return sorted(registros, key=lambda x: x.fecha_y_hora, reverse=True)
 
 
 @app.route("/")
@@ -91,23 +91,20 @@ def recibir_mensajes(req):
             messages = objeto_mensaje[0]
 
             if "type" in messages:
-                tipo = messages['type']
+                tipo = messages["type"]
 
-                if tipo == 'interactive':
+                if tipo == "interactive":
                     return 0
-                
-                if "text" in messages:
-                    text = messages['text']['body']
-                    numero = messages['from']
 
-                    agregar_mensajes_log(json.dumps(text))
-                    agregar_mensajes_log(json.dumps(numero))
+                if "text" in messages:
+                    text = messages["text"]["body"]
+                    numero = messages["from"]
+
+                    agregar_mensajes_log(json.dumps(messages))
 
         return jsonify({"message": "EVENT_RECEIVED"})
     except Exception as e:
         return jsonify({"message": "EVENT_RECEIVED"})
-
-    return jsonify({"message": "EVENT_RECEIVED"})
 
 
 if __name__ == "__main__":
