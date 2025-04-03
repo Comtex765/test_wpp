@@ -67,7 +67,7 @@ def webhook():
 
 def verificar_token(req):
     token = req.args.get("hub.verify_token")
-    challenge = req.args.get("hub_challenge")
+    challenge = req.args.get("hub.challenge")
 
     if challenge and token == TOKEN_COMTEX:
         return challenge
