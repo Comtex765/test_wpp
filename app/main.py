@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from datetime import datetime
+import http.client
 
 import json
 
@@ -16,7 +17,7 @@ db = SQLAlchemy(app)
 # Modelo de la tabla log
 class Log(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    fecha_y_hora = db.Column(db.DateTime, default=datetime.now(datetime.timezone.utc))
+    fecha_y_hora = db.Column(db.DateTime, default=datetime.now())
     texto = db.Column(db.TEXT)
 
 
@@ -105,6 +106,52 @@ def recibir_mensajes(req):
         return jsonify({"message": "EVENT_RECEIVED"})
     except Exception as e:
         return jsonify({"message": "EVENT_RECEIVED"})
+
+
+def enviar_mensajes_whatsapp(texto, number):
+    texto = texto.lower()
+
+    if "hola" in texto:
+        data = {
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": number,
+            "type": "text",
+            "text": {
+                "preview_url": False,
+                "body": "👋 ¡Hola, bienvenido a RIOSOFT369! 🎟️\nPara comenzar con tu compra de boletos, digita tu número de cédula:",
+            },
+        }
+    else:
+        data = {
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": number,
+            "type": "text",
+            "text": {
+                "preview_url": False,
+                "body": "Gracias, has ingresado tu número de cédula",
+            },
+        }
+
+    # Convertir el diccionario a formato Json
+    data - json.dumps(data)
+
+    headers = {
+        "Content-Type": "application/json",
+        "Authorization": "Bearer EAAOIhmqaZAB8BO8gME9cQ1scQQ9N1pPiz7elARlmD6msZChwOh1bac8hWeKzd4npfPBYYl9yowtQIthE8AnDWcYTaa6SpyI6YVvCImPiHSV2egZBd77G0KgdQ44Ez1ViQFWyJZC8KZBK7smv31jZBPWztYXeLzxZAZBy5AGMkFRIqQ6BfBsM1dIShW8UNyRuncys5HIgLFUsBWm8V7ZClLUcdhKon9JsZD",
+    }
+
+    connection -= http.client.HTTPSConnection("graph.facebook.com")
+
+    try:
+        connection.request("POST", "/v22.0/577915962078810/messages", data, headers)    
+        response = connection.getresponse()
+        print(response.status, response.reason)
+    except Exception as e:
+        agregar_mensajes_log(json.dumps(e))
+    finally:
+        connection.close()
 
 
 if __name__ == "__main__":
