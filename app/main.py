@@ -138,6 +138,8 @@ def enviar_mensajes_whatsapp(texto, number):
     # Convertir el diccionario a formato Json
     data = json.dumps(data)
 
+
+
     headers = {
         "Content-Type": "application/json",
         "Authorization": "Bearer EAAOIhmqaZAB8BO8gME9cQ1scQQ9N1pPiz7elARlmD6msZChwOh1bac8hWeKzd4npfPBYYl9yowtQIthE8AnDWcYTaa6SpyI6YVvCImPiHSV2egZBd77G0KgdQ44Ez1ViQFWyJZC8KZBK7smv31jZBPWztYXeLzxZAZBy5AGMkFRIqQ6BfBsM1dIShW8UNyRuncys5HIgLFUsBWm8V7ZClLUcdhKon9JsZD",
@@ -148,8 +150,9 @@ def enviar_mensajes_whatsapp(texto, number):
     try:
         connection.request("POST", "/v22.0/577915962078810/messages", data, headers)
         response = connection.getresponse()
-        print(response.status, response.reason)
+        print("--->" + response.status, response.reason)
     except Exception as e:
+        print("eee >> " + e)
         agregar_mensajes_log(json.dumps(e))
     finally:
         connection.close()
