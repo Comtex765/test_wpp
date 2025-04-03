@@ -79,8 +79,6 @@ def verificar_token(req):
 
 
 def recibir_mensajes(req):
-    req = request.get_json()
-
     try:
         req = request.get_json()
         entry = req["entry"][0]
@@ -101,7 +99,7 @@ def recibir_mensajes(req):
                     text = messages["text"]["body"]
                     numero = messages["from"]
 
-                    enviar_mensajes_whatsapp(texto=text, number=numero)
+                    enviar_mensajes_whatsapp(text, numero)
                     agregar_mensajes_log(json.dumps(messages))
 
         return jsonify({"message": "EVENT_RECEIVED"})
