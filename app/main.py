@@ -101,6 +101,7 @@ def recibir_mensajes(req):
                     text = messages["text"]["body"]
                     numero = messages["from"]
 
+                    enviar_mensajes_whatsapp(texto=text, number=numero)
                     agregar_mensajes_log(json.dumps(messages))
 
         return jsonify({"message": "EVENT_RECEIVED"})
@@ -145,7 +146,7 @@ def enviar_mensajes_whatsapp(texto, number):
     connection -= http.client.HTTPSConnection("graph.facebook.com")
 
     try:
-        connection.request("POST", "/v22.0/577915962078810/messages", data, headers)    
+        connection.request("POST", "/v22.0/577915962078810/messages", data, headers)
         response = connection.getresponse()
         print(response.status, response.reason)
     except Exception as e:
