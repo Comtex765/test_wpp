@@ -121,7 +121,7 @@ def enviar_mensajes_whatsapp(texto, number):
             "text": {
                 "preview_url": False,
                 "body": "👋 ¡Hola, bienvenido a RIOSOFT369! 🎟️\nPara comenzar con tu compra de boletos, digita tu número de cédula:",
-            }
+            },
         }
     else:
         data = {
@@ -132,17 +132,15 @@ def enviar_mensajes_whatsapp(texto, number):
             "text": {
                 "preview_url": False,
                 "body": "Gracias, has ingresado tu número de cédula",
-            }
+            },
         }
 
     # Convertir el diccionario a formato Json
     data = json.dumps(data)
 
-
-
     headers = {
         "Content-Type": "application/json",
-        "Authorization": "Bearer EAAOIhmqaZAB8BO8gME9cQ1scQQ9N1pPiz7elARlmD6msZChwOh1bac8hWeKzd4npfPBYYl9yowtQIthE8AnDWcYTaa6SpyI6YVvCImPiHSV2egZBd77G0KgdQ44Ez1ViQFWyJZC8KZBK7smv31jZBPWztYXeLzxZAZBy5AGMkFRIqQ6BfBsM1dIShW8UNyRuncys5HIgLFUsBWm8V7ZClLUcdhKon9JsZD",
+        "Authorization": "Bearer EAAOIhmqaZAB8BOw3HYsencdFGx3Sqa8MaRBhVYzl6TYGROmI9CnZCumP0ZAHZA3OZAAoTNJ6JlsdvwZAePpJ7AIuqva5Wxc6HaL5iBYlQDamYHOQ8mHEW34MXaGg5fzh0yVftDKIBgE29TZCt5w50njS2IUTA2Ok4kIrtjhFeUlVTDZCqke7ZAaNkKvffG8sryZApD2GcdzGv1oce7fgt49bktyykNhMsZD",
     }
 
     connection = http.client.HTTPSConnection("graph.facebook.com")
