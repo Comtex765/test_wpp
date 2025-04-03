@@ -47,8 +47,8 @@ def agregar_mensajes_log(texto):
 
     # Guardar en la base de datos
     texto_str = json.dumps(texto, ensure_ascii=False)
-    
-    nuevo_registro = Log(texto=texto)
+
+    nuevo_registro = Log(texto=texto_str)
     db.session.add(nuevo_registro)
     db.session.commit()
 
