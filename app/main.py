@@ -100,7 +100,6 @@ def recibir_mensajes(req):
                     numero = messages["from"]
 
                     enviar_mensajes_whatsapp(text, numero)
-                    agregar_mensajes_log(json.dumps(messages))
 
         return jsonify({"message": "EVENT_RECEIVED"})
     except Exception as e:
@@ -119,6 +118,41 @@ def enviar_mensajes_whatsapp(texto, number):
             "text": {
                 "preview_url": False,
                 "body": "👋 ¡Hola, bienvenido a RIOSOFT369! 🎟️\nPara comenzar con tu compra de boletos, digita tu número de cédula:",
+            },
+        }
+    elif "1" in texto:
+        data = {
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": number,
+            "type": "text",
+            "text": {
+                "preview_url": False,
+                "body": "Mand uno",
+            },
+        }
+    elif "2" in texto:
+        data = {
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": number,
+            "type": "location",
+            "location": {
+                "latitude": "45.201418726664606",
+                "longitude": "9.149926783187368",
+                "name": "Moza Racing",
+                "address": "Viale Brambilla, 98, 27100 Pavia PV, Italia",
+            },
+        }
+    elif "3" in texto:
+        data = {
+            "messaging_product": "whatsapp",
+            "recipient_type": "individual",
+            "to": number,
+            "type": "document",
+            "document": {
+                "link": "https://www.turnerlibros.com/wp-content/uploads/2021/02/ejemplo.pdf",
+                "caption": "Temario del Curso #001",
             },
         }
     else:
